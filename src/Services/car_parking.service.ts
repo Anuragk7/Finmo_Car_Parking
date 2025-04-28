@@ -36,36 +36,64 @@ export class ParkingService {
       this.parkingLot.carColorMap.set(car.car_color, new Set());
     }
     this.parkingLot.carColorMap.get(car.car_color)!.add(car);
-    this.parkingLot.cars.add(car)
+    this.parkingLot.carMap.set(car.car_reg_no,car);
+    this.parkingLot.slotMap.set(availableSlot, car);
+    
 
     return availableSlot;
   }
 
   // Free a slot when car leaves
-  freeSlot(slotNumber: number|string): number {
-    if (typeof())
-    return 0;
+  freeSlot(input: number | string): number {
+    if (typeof input === 'number') {
+      const car = this.parkingLot.slotMap.get(input);
+      if (car){
+        const regNo = car.car_reg_no;
+        this.parkingLot.carMap.delete(regNo);
+        this.parkingLot.slotMap.delete(input);
+        this.parkingLot.availableSlots.push(input);
+        return input;
+      }
+      else {
+        return -1;
+      }
+    } else {
+      const car = this.parkingLot.carMap.get(input);
+      if (car){
+        const slot = car.car_slot;
+        this.parkingLot.slotMap.delete(slot);
+        this.parkingLot.carMap.delete(input);
+        this.parkingLot.availableSlots.push(slot);
+        return slot;
+      }
+      else {
+        return -1;
+      }
+      
+    }
+   
   }
+  
 
-  // Get all occupied slots
-  getOccupiedSlots(): Slot[] {
-    return this.parkingLot.slots.filter(slot => !slot.isAvailable());
-  }
+//   // Get all occupied slots
+//   getOccupiedSlots(): Slot[] {
+//     return this.parkingLot.slots.filter(slot => !slot.isAvailable());
+//   }
 
-  // Get cars by color
-  getCarsByColor(color: string): Car[] {
-    return Array.from(this.parkingLot.carColorMap.get(color.toLowerCase()) || []);
-  }
+//   // Get cars by color
+//   getCarsByColor(color: string): Car[] {
+//     return Array.from(this.parkingLot.carColorMap.get(color.toLowerCase()) || []);
+//   }
 
-  // Get slot by car registration number
-  getSlotByRegNo(regNo: string): number | null {
-    const slot = this.parkingLot.slots.find(s => s.parkedCar?.car_reg_no === regNo);
-    return slot ? slot.slot_number : null;
-  }
+//   // Get slot by car registration number
+//   getSlotByRegNo(regNo: string): number | null {
+//     const slot = this.parkingLot.slots.find(s => s.parkedCar?.car_reg_no === regNo);
+//     return slot ? slot.slot_number : null;
+//   }
 
-  // Get all slots occupied by cars of a particular color
-  getSlotsByColor(color: string): number[] {
-    const cars = this.parkingLot.carColorMap.get(color.toLowerCase()) || [];
-    return cars.map(car => this.getSlotByRegNo(car.car_reg_no)!).filter(Boolean) as number[];
-  }
+//   // Get all slots occupied by cars of a particular color
+//   getSlotsByColor(color: string): number[] {
+//     const cars = this.parkingLot.carColorMap.get(color.toLowerCase()) || [];
+//     return cars.map(car => this.getSlotByRegNo(car.car_reg_no)!).filter(Boolean) as number[];
+//   }
 }

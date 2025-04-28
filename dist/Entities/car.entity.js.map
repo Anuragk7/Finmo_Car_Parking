@@ -1,0 +1,1 @@
+{"version":3,"file":"car.entity.js","sourceRoot":"","sources":["../../src/Entities/car.entity.ts"],"names":[],"mappings":";;;AAAA,MAAa,GAAG;IACZ,UAAU,CAAS;IACnB,SAAS,CAAS;IAClB,QAAQ,CAAS;IAEjB,YAAY,UAAkB,EAAE,SAAiB,EAAE,QAAe;QAChE,IAAI,CAAC,UAAU,GAAG,UAAU,CAAC;QAC7B,IAAI,CAAC,SAAS,GAAG,SAAS,CAAC;QAC3B,IAAI,CAAC,QAAQ,GAAG,QAAQ,CAAC;IAC3B,CAAC;CACF;AAVH,kBAUG"}
