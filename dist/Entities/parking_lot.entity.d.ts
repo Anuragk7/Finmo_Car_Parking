@@ -4,7 +4,7 @@ export declare class ParkingLot {
     availableSlots: MinHeap<number>;
     carColorMap: Map<string, Set<Car>>;
     totalSlots: number;
-    slotMap: Map<Number, Car>;
+    slotMap: Map<number, Car>;
     carMap: Map<String, Car>;
     constructor(initialSize: number);
     expandLot(count: number): void;

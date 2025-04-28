@@ -66,6 +66,31 @@ let ParkingService = class ParkingService {
             }
         }
     }
+    getCarsByColor(color) {
+        const cars = this.parkingLot.carColorMap.get(color);
+        if (!cars) {
+            return [];
+        }
+        return Array.from(cars).map(car => car.car_reg_no);
+    }
+    getParkingStatus() {
+        const occupiedSlots = [];
+        this.parkingLot.slotMap.forEach((car, slotNumber) => {
+            occupiedSlots.push({
+                car_slot: slotNumber,
+                car_reg_no: car.car_reg_no,
+                car_color: car.car_color
+            });
+        });
+        return occupiedSlots;
+    }
+    getSlotNumbersByColor(color) {
+        const cars = this.parkingLot.carColorMap.get(color);
+        if (!cars) {
+            return [];
+        }
+        return Array.from(cars).map(car => car.car_slot);
+    }
 };
 exports.ParkingService = ParkingService;
 exports.ParkingService = ParkingService = __decorate([

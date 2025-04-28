@@ -73,8 +73,40 @@ export class ParkingService {
     }
    
   }
-  
+  getCarsByColor(color: string): string[] {
+    const cars = this.parkingLot.carColorMap.get(color);
+    if (!cars) {
+      return []; // No cars with the given color
+    }
 
+    // Return an array of car registration numbers
+    return Array.from(cars).map(car => car.car_reg_no);
+  }
+  getParkingStatus(){
+
+    const occupiedSlots: Car[] = [];
+    this.parkingLot.slotMap.forEach((car, slotNumber) => {
+      occupiedSlots.push(
+        {
+        car_slot: slotNumber,
+        car_reg_no: car.car_reg_no,
+        car_color: car.car_color
+      }
+    );
+    });
+
+    return occupiedSlots;
+}
+  
+getSlotNumbersByColor(color: string): number[] {
+  const cars = this.parkingLot.carColorMap.get(color);
+  if (!cars) {
+    return []; // No cars with the given color
+  }
+
+  // Return an array of parking slot numbers where the cars of the given color are parked
+  return Array.from(cars).map(car => car.car_slot);
+}
 //   // Get all occupied slots
 //   getOccupiedSlots(): Slot[] {
 //     return this.parkingLot.slots.filter(slot => !slot.isAvailable());

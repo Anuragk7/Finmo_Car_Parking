@@ -1,4 +1,5 @@
 import { ParkingService } from './Services/car_parking.service';
+import { Car } from './Entities/car.entity';
 export declare class ParkingController {
     private readonly parkingService;
     constructor(parkingService: ParkingService);
@@ -19,4 +20,12 @@ export declare class ParkingController {
     }): {
         freed_slot_number: number;
     };
+    getCarsByColor(color: string): string[];
+    getSlotNumbersByColor(color: string): number[];
+    incrementParkingLot(body: {
+        increment_slot: number;
+    }): {
+        total_slot: number;
+    };
+    getStatus(): Car[];
 }

@@ -22,11 +22,18 @@ let ParkingController = class ParkingController {
         this.parkingService = parkingService;
     }
     initializeParkingLot(body) {
+        if (!body.no_of_slot || body.no_of_slot <= 0) {
+            throw new common_1.BadRequestException('Invalid or missing "no_of_slot" value.');
+        }
         const totalSlots = this.parkingService.initializeParkingLot(body.no_of_slot);
         return { total_slot: totalSlots };
     }
     parkCar(body) {
-        const car = new car_entity_1.Car(body.car_reg_no, body.car_color, 0);
+        const { car_reg_no, car_color } = body;
+        if (!car_reg_no || !car_color) {
+            throw new common_1.BadRequestException('Both car_reg_no and car_color are required');
+        }
+        const car = new car_entity_1.Car(car_reg_no, car_color, 0);
         const slotNumber = this.parkingService.parkCar(car);
         car.car_slot = slotNumber;
         if (slotNumber === -1) {
@@ -44,6 +51,31 @@ let ParkingController = class ParkingController {
             throw new common_1.BadRequestException('Slot already free or Car not found');
         }
         return { freed_slot_number: freedSlot };
+    }
+    getCarsByColor(color) {
+        const carRegistrationNumbers = this.parkingService.getCarsByColor(color);
+        if (carRegistrationNumbers.length === 0) {
+            throw new common_1.BadRequestException(`No cars found with color: ${color}`);
+        }
+        return carRegistrationNumbers;
+    }
+    getSlotNumbersByColor(color) {
+        const slotNumbers = this.parkingService.getSlotNumbersByColor(color);
+        if (slotNumbers.length === 0) {
+            throw new common_1.BadRequestException(`No cars found with color: ${color}`);
+        }
+        return slotNumbers;
+    }
+    incrementParkingLot(body) {
+        if (body.increment_slot === undefined || body.increment_slot <= 0) {
+            throw new common_1.BadRequestException('The increment_slot parameter is required and must be a positive number');
+        }
+        const totalSlots = this.parkingService.expandParkingLot(body.increment_slot);
+        return { total_slot: totalSlots };
+    }
+    getStatus() {
+        const occupiedSlots = this.parkingService.getParkingStatus();
+        return occupiedSlots;
     }
 };
 exports.ParkingController = ParkingController;
@@ -68,6 +100,33 @@ __decorate([
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", void 0)
 ], ParkingController.prototype, "clearSlot", null);
+__decorate([
+    (0, common_1.Get)('/registration_numbers/:color'),
+    __param(0, (0, common_1.Param)('color')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", void 0)
+], ParkingController.prototype, "getCarsByColor", null);
+__decorate([
+    (0, common_1.Get)('/slot_numbers/:color'),
+    __param(0, (0, common_1.Param)('color')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", void 0)
+], ParkingController.prototype, "getSlotNumbersByColor", null);
+__decorate([
+    (0, common_1.Patch)('/parking_lot'),
+    __param(0, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", void 0)
+], ParkingController.prototype, "incrementParkingLot", null);
+__decorate([
+    (0, common_1.Get)('/status'),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", void 0)
+], ParkingController.prototype, "getStatus", null);
 exports.ParkingController = ParkingController = __decorate([
     (0, common_1.Controller)(),
     __metadata("design:paramtypes", [car_parking_service_1.ParkingService])

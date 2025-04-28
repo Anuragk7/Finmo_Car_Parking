@@ -5,7 +5,7 @@ export class ParkingLot {
   availableSlots: MinHeap<number>;  // Heap to efficiently fetch the available slot
   carColorMap: Map<string, Set<Car>> = new Map();  // Map to store cars by color
   totalSlots: number = 0;  // Total number of slots
-  slotMap: Map<Number, Car> = new Map();
+  slotMap: Map<number, Car> = new Map();
   carMap: Map <String, Car> = new Map();
 
   constructor(initialSize: number) {
