@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { ParkingLot } from 'src/Entities/parking_lot.entity';
-import { Car } from 'src/Entities/car.entity';
+import { ParkingLot } from '../Entities/parking_lot.entity';
+import { Car } from '../Entities/car.entity';
 
 @Injectable()
 export class ParkingService {

@@ -3,10 +3,15 @@
 import { Body, Controller, Post,Get, BadRequestException, Param, Patch } from '@nestjs/common';
 import { ParkingService } from '../Services/car_parking.service';
 import { Car } from '../Entities/car.entity';
+import { get } from 'http';
 
 @Controller()
 export class ParkingController {
   constructor(private readonly parkingService: ParkingService) {}
+  @Get('/')
+  home(){
+    return 'Welcome to the parking lot'
+  }
 
   // 1. Initialize parking lot
   @Post('/parking_lot')
