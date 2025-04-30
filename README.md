@@ -42,8 +42,8 @@ To set up and run the Parking Lot API locally, follow these steps:
 ### Steps
 1. **Clone the Repository** (if applicable):
    ```bash
-   git clone <repository-url>
-   cd <repository-directory>
+   git clone https://github.com/Anuragk7/Finmo_Car_Parking
+   cd Finmo_Car_Parking
    ```
 
 2. **Install Dependencies**:
