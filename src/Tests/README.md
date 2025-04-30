@@ -21,11 +21,15 @@
 ## Introduction
 The Parking Lot API is a RESTful service designed to manage a parking lot system. It allows users to initialize a parking lot, park cars, free slots, query cars by color, and check the parking lot status. Built with NestJS and TypeScript, the API provides a robust and scalable solution for parking lot management, with clear error handling and validation.
 
+## Live Links
+**API Deployment:** https://finmocarparking-production.up.railway.app
+**Docker Image:** https://hub.docker.com/r/anuragk777/finmo_car_parking-server
+
 ## Design Choices
 - **Data Structures & Time Complexity**: Used heap for **log(n)** time for allocating and deallocating slots, sets and maps for **O(1)** for fetching cars or slots by color .
 - **Dependency Injection**: For Modularity and separation of concerns.
 - **Error Handling**: Comprehensive validation ensures that invalid inputs (e.g., missing fields, negative slot numbers) result in clear error messages with HTTP 400 status codes.
-- 
+- **Unit Tests**: Unit tests return test the main controller and Service Provider.
 
 ## Setup Guide
 To set up and run the Parking Lot API locally, follow these steps:
